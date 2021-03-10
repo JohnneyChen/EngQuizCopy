@@ -1,11 +1,6 @@
 const mysql = require('mysql')
 
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'password',
-    database: 'bakery_app'
-});
+const connection = mysql.createConnection(process.env.CLEARDB_DATABASE_URL);
 
 const item1 = ['Mini French Baguette', 'https://images.unsplash.com/photo-1568471173242-461f0a730452?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1030&q=80', 'Salt, Flour', 1.50, 'loaf']
 const item2 = ['Bacon & Potato Bun', 'https://images.unsplash.com/photo-1588861472194-6883d8b5e552?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80', 'Cheddar Cheese, Potato, Mozzarella Cheese, Corn, Bacon, Salt, Sugar, Flour.', 3.80, 'bun']
