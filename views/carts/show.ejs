@@ -1,0 +1,64 @@
+<% layout('layouts/boilerplate.ejs') %>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <% if (items.length) { %>
+                    <ul class="list-group">
+                        <% for (let item of items) { %>
+                            <li class="list-group-item">
+                                <span class="badge bg-secondary">$<%=item.cost %>
+                                </span>
+                                <p class="lead mr-1 d-inline mr-auto">
+                                    <%=item.item.name %>
+                                </p>
+
+                                <div class="d-inline">
+                                    <form action="/cart/<%=item.item.id%>?_method=PATCH" method="POST"
+                                        class="mr-1 d-inline">
+                                        <input type="number" name="qty" value="<%=item.qty%>"
+                                            class="cartQtyInput form-control" onchange="submit()">
+                                    </form>
+                                    <form action="/cart/<%=item.item.id%>?_method=DELETE" method="POST"
+                                        class="ml-auto cartItemDelete d-inline">
+                                        <button class="btn btn-danger btn-sm">Remove item</button>
+                                    </form>
+                                </div>
+
+                            </li>
+                            <% } %>
+                    </ul>
+                    <p class="strong">
+                        Cart total: $<%=cart.totalCost %>
+                    </p>
+                    <button type="button" id="checkout-button" class="btn btn-success">Checkout</button>
+                    <script type="text/javascript">
+                        var stripe = Stripe('pk_test_51ICS0mHRIHw8xwrCE8L6iiaHrYCf4sCKnxlYdIvASEpObUEQucCWjWDELp25Loi7Vxy88Rap6t1LM6o33Xqn5prg00foMOWdsC');
+                        var checkoutButton = document.getElementById('checkout-button');
+                        checkoutButton.addEventListener('click', function () {
+                            fetch('/create-checkout-session', {
+                                method: 'POST',
+                            })
+                                .then(function (response) {
+                                    return response.json();
+                                })
+                                .then(function (session) {
+                                    return stripe.redirectToCheckout({ sessionId: session.id });
+                                })
+                                .then(function (result) {
+                                    if (result.error) {
+                                        alert(result.error.message);
+                                    }
+                                })
+                                .catch(function (error) {
+                                    console.error('Error:', error);
+                                });
+                        });
+                    </script>
+                    <a href="/cart/clear" class="btn btn-danger">Clear cart</a>
+                    <% } else { %>
+                        <p class="strong">No items in cart...</p>
+                        <% } %>
+
+            </div>
+        </div>
+    </div>

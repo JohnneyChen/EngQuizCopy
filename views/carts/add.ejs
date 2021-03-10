@@ -1,0 +1,29 @@
+<% layout('layouts/boilerplate.ejs') %>
+    <div class="container">
+        <div class="row">
+            <div class="col-8 offset-2">
+                <div class="card mb-5" style="height: 40rem">
+                    <img src="<%=result[0].image_url%>" class="card-img-top h-50" alt="<%=result[0].name%>">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <%=result[0].name%>
+                        </h5>
+                        <h6 class="card-subtitle mb-2 text-muted">
+                            <%=result[0].description%>
+                        </h6>
+                        <p class="card-text">
+                            $<%=result[0].cost %>
+                        </p>
+                        <form novalidate class="validated-form" method="POST" action="/cart/add/<%=result[0].id%>">
+                            <div class="mb-3">
+                                <label for="qtyInput" class="form-label">Quantity</label>
+                                <input type="number" class="form-control" id="qtyInput" aria-describedby="quantityInput"
+                                    step="1" required name="qty">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add to cart</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

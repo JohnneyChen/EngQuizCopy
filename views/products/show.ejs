@@ -1,0 +1,43 @@
+<% layout('layouts/boilerplate.ejs') %>
+    <div class="container">
+        <div class="row">
+            <div class="col-8 offset-2">
+                <div class="card mb-5 productDisplay">
+                    <div class="productImgDiv">
+                        <img src="<%=result[0].image_url%>" class="card-img-top productImg img-responsive"
+                            alt="<%=result[0].name%>">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <%=result[0].name%>
+                        </h5>
+                        <h6 class="card-subtitle mb-2 text-muted">
+                            <%=result[0].description%>
+                        </h6>
+                        <p class="card-text">
+                            $<%=result[0].cost %>
+                        </p>
+
+                        <div class="div">
+                            <form action="/cart/<%=result[0].id%>" method="post">
+                                <input type="number" name="qty" id="qtyInput" value="1" step="1">
+                                <button class="btn btn-primary">Add to cart</button>
+                            </form>
+                            <% if (admin) { %>
+                                <a href="/products/<%=result[0].id%>/edit" class="btn btn-warning display-inline"
+                                    style="margin-left: auto;">Edit product</a>
+                                <% } %>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <% if (admin) { %>
+                    <form action="/products/<%=result[0].id%>?_method=DELETE" method="POST" class="display-inline">
+                        <button class="btn btn-danger">Delete product</button>
+                    </form>
+                    <% } %>
+            </div>
+        </div>
+    </div>

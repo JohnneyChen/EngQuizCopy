@@ -1,0 +1,46 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid ">
+        <a class="navbar-brand" href="/">Johnney's Bakery</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link" aria-current="page" href="/products">Our baked goods</a>
+            </div>
+
+            <% if (!login) { %>
+
+                <div class="navbar-nav userNav1">
+                    <a class="nav-link" aria-current="page" href="/login">Login</a>
+                    <a class="nav-link" aria-current="page" href="/register">Register</a>
+                </div>
+
+                <% } %>
+                    <% if (login) { %>
+
+                        <div class="navbar-nav userNav2">
+                            <a class="nav-link" aria-current="page" href="/logout">Logout</a>
+                        </div>
+
+
+                        <% } %>
+
+                            <div class="navbar-nav">
+                                <a class="nav-link" aria-current="page" href="/cart"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                                        class="bi bi-cart-check-fill" viewBox="0 0 16 16">
+                                        <path
+                                            d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-1.646-7.646l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L8 8.293l2.646-2.647a.5.5 0 0 1 .708.708z" />
+                                    </svg> <span class="badge bg-secondary">
+                                        <%=cart.totalQty %>
+                                    </span></a>
+
+                            </div>
+
+        </div>
+
+
+    </div>
+</nav>

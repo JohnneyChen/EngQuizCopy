@@ -1,0 +1,27 @@
+<% layout('layouts/boilerplate.ejs') %>
+    <div class="container">
+        <div class="row">
+            <div class="col-6 offset-3">
+                <form novalidate class="validated-form" method="POST" action="/register">
+                    <div class="mb-3">
+                        <label for="usernameInput" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="usernameInput" aria-describedby="usernameInput"
+                            required name="username">
+                    </div>
+                    <div class="mb-3">
+                        <label for="pwInput" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="pwInput" aria-describedby="passwordInput"
+                            name="password" required>
+                    </div>
+                    <div class="mb-3">
+                        <button class="btn btn-primary display-block mb-3" type="button" id="toggleAdmin">Toggle admin
+                            key</button>
+                        <input type="text" class="form-control adminKeyInput" id="adminKeyInput"
+                            aria-describedby="passwordInput" name="admin_key">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="/js/adminKey.js"></script>

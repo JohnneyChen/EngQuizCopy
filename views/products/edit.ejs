@@ -1,0 +1,45 @@
+<% layout('layouts/boilerplate.ejs') %>
+    <% if(admin) { %>
+        <div class="container">
+            <div class="row">
+                <div class="col-6 offset-3">
+                    <form novalidate class="validated-form" method="POST"
+                        action="/products/<%= result[0].id%>?_method=PATCH">
+                        <div class="mb-3">
+                            <label for="nameInput" class="form-label">Product name</label>
+                            <input type="text" class="form-control" id="nameInput" aria-describedby="nameInput" required
+                                value="<%=result[0].name %>" name="name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="imgurlInput" class="form-label">Image URL</label>
+                            <input type="text" class="form-control" id="imgurlInput" aria-describedby="imgurlInput"
+                                value="<%=result[0].image_url %>" name="image_url">
+                        </div>
+                        <div class="mb-3">
+                            <label for="descInput" class="form-label">Description</label>
+                            <textarea id="descInput" cols="30" rows="6" class="form-control"
+                                name="description"><%= result[0].description%> </textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="typeInput" class="form-label">Type</label>
+                            <select class="form-select" aria-label="select type" id="typeInput" name="type">
+                                <option value="cake" <%- (result[0].type==="cake" ) ? "selected" : '' %>>cake</option>
+                                <option value="bun" <%- (result[0].type==="bun" ) ? "selected" : '' %>>bun</option>
+                                <option value="loaf" <%- (result[0].type==="loaf" ) ? "selected" : '' %>>loaf</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 input-group">
+                            <label for="priceInput" class="form-label">Price</label>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input type="number" class="form-control" id="priceInput" aria-describedby="imgurlInput"
+                                    step="0.01" required value="<%=result[0].cost%>" name="cost">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Edit product</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <%} %>

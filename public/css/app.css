@@ -1,0 +1,25 @@
+.adminKeyInput {
+    display: none;
+}
+
+.cartQtyInput {
+    width: 60px;
+    display: inline;
+}
+
+.userNav1 {
+    margin-left: auto;
+}
+
+.userNav2 {
+    margin-left: auto;
+}
+
+.cartManage {
+    margin-left: auto;
+}
+
+.productDisplay {
+    width:60rems;
+    height: 60rems;
+}
