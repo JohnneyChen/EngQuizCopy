@@ -11,8 +11,15 @@ const item6 = ['Red Velvet Cake', 'https://images.unsplash.com/photo-1543287920-
 const value = [item1, item2, item3, item4, item5, item6]
 
 connection.connect();
+
 const query = 'INSERT INTO products (name,image_url,description,cost,type) VALUES ?'
 connection.query(query, [value], (error, result) => {
-    if (error) throw error
+    if (error) {
+        if (error.code === 'PROTOCOL_CONNECTION_LOST') {
+            connection = mysql.createConnection(process.env.CLEARDB_DATABASE_URL);
+        } else {
+            throw error
+        }
+    }
     console.log('successfully seeded')
 })

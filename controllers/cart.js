@@ -10,7 +10,13 @@ const addCart = (req, res) => {
     const qty = parseInt(req.body.qty) || 1;
     const q = 'SELECT * FROM products WHERE id=?'
     connection.query(q, productId, (error, result) => {
-        if (error) throw error
+        if (error) {
+            if (error.code === 'PROTOCOL_CONNECTION_LOST') {
+                connection = mysql.createConnection(process.env.CLEARDB_DATABASE_URL);
+            } else {
+                throw error
+            }
+        }
         const newCart = new Cart(req.session.cart || {});
         newCart.add(result[0], productId, qty);
         req.session.cart = newCart;

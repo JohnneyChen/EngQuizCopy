@@ -7,7 +7,13 @@ connection.connect();
 const getProducts = (req, res) => {
     const q = 'SELECT * FROM products'
     connection.query(q, (error, result) => {
-        if (error) throw error
+        if (error) {
+            if (error.code === 'PROTOCOL_CONNECTION_LOST') {
+                connection = mysql.createConnection(process.env.CLEARDB_DATABASE_URL);
+            } else {
+                throw error
+            }
+        }
         res.render('products/index', { result })
     })
 }
