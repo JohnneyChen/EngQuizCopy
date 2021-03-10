@@ -22,7 +22,13 @@ const getProduct = (req, res) => {
     const { id } = req.params
     const q = 'SELECT * FROM products WHERE id=?'
     connection.query(q, id, (error, result) => {
-        if (error) throw error
+        if (error) {
+            if (error.code === 'PROTOCOL_CONNECTION_LOST') {
+                connection = mysql.createConnection(process.env.CLEARDB_DATABASE_URL);
+            } else {
+                throw error
+            }
+        }
         res.render('products/show', { result })
     })
 }
@@ -35,7 +41,13 @@ const getProductEdit = (req, res) => {
     const { id } = req.params
     const q = 'SELECT * FROM products WHERE id=?'
     connection.query(q, id, (error, result) => {
-        if (error) throw error
+        if (error) {
+            if (error.code === 'PROTOCOL_CONNECTION_LOST') {
+                connection = mysql.createConnection(process.env.CLEARDB_DATABASE_URL);
+            } else {
+                throw error
+            }
+        }
         res.render('products/edit', { result })
     })
 }
@@ -44,7 +56,13 @@ const postNew = (req, res) => {
     console.log(req.body)
     const q = 'INSERT INTO products SET ?'
     connection.query(q, req.body, (error, result) => {
-        if (error) throw error
+        if (error) {
+            if (error.code === 'PROTOCOL_CONNECTION_LOST') {
+                connection = mysql.createConnection(process.env.CLEARDB_DATABASE_URL);
+            } else {
+                throw error
+            }
+        }
         req.flash('success', 'Successfully added a product')
         res.redirect('/products')
     })
@@ -54,7 +72,13 @@ const patchProduct = (req, res) => {
     const { id } = req.params
     const q = 'UPDATE products SET ? WHERE id=?'
     connection.query(q, [req.body, parseInt(id)], (error, result) => {
-        if (error) throw error
+        if (error) {
+            if (error.code === 'PROTOCOL_CONNECTION_LOST') {
+                connection = mysql.createConnection(process.env.CLEARDB_DATABASE_URL);
+            } else {
+                throw error
+            }
+        }
         req.flash('success', 'Successfully edited a product')
         res.redirect(`/products/${id}`)
     })
@@ -64,7 +88,13 @@ const deleteProduct = (req, res) => {
     const { id } = req.params
     const q = 'DELETE FROM products WHERE id=?'
     connection.query(q, id, (error, result) => {
-        if (error) throw error
+        if (error) {
+            if (error.code === 'PROTOCOL_CONNECTION_LOST') {
+                connection = mysql.createConnection(process.env.CLEARDB_DATABASE_URL);
+            } else {
+                throw error
+            }
+        }
         req.flash('success', 'Successfully deleted a product')
         res.redirect(`/products`)
     })
