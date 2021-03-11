@@ -1,4 +1,4 @@
-const pool = require('../mysqlpool')
+const pool = require('../mysqlConnection')
 
 const getProducts = (req, res) => {
     const q = 'SELECT * FROM products'
