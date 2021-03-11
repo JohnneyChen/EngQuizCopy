@@ -1,21 +1,13 @@
-const mysql = require('mysql')
+const pool = require('../mysqlConnection')
 const Cart = require('../models/cart')
-
-const connection = mysql.createConnection(process.env.CLEARDB_DATABASE_URL);
-
-connection.connect();
 
 const addCart = (req, res) => {
     const productId = req.params.id;
     const qty = parseInt(req.body.qty) || 1;
     const q = 'SELECT * FROM products WHERE id=?'
-    connection.query(q, productId, (error, result) => {
+    pool.query(q, productId, (error, result) => {
         if (error) {
-            if (error.code === 'PROTOCOL_CONNECTION_LOST') {
-                connection = mysql.createConnection(process.env.CLEARDB_DATABASE_URL);
-            } else {
-                throw error
-            }
+            throw error
         }
         const newCart = new Cart(req.session.cart || {});
         newCart.add(result[0], productId, qty);

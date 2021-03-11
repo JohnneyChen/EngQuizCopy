@@ -1,18 +1,10 @@
-const mysql = require('mysql')
-
-const connection = mysql.createConnection(process.env.CLEARDB_DATABASE_URL);
-
-connection.connect();
+const pool = require('../mysqlpool')
 
 const getProducts = (req, res) => {
     const q = 'SELECT * FROM products'
-    connection.query(q, (error, result) => {
+    pool.query(q, (error, result) => {
         if (error) {
-            if (error.code === 'PROTOCOL_CONNECTION_LOST') {
-                connection = mysql.createConnection(process.env.CLEARDB_DATABASE_URL);
-            } else {
-                throw error
-            }
+            throw error
         }
         res.render('products/index', { result })
     })
@@ -21,13 +13,9 @@ const getProducts = (req, res) => {
 const getProduct = (req, res) => {
     const { id } = req.params
     const q = 'SELECT * FROM products WHERE id=?'
-    connection.query(q, id, (error, result) => {
+    pool.query(q, id, (error, result) => {
         if (error) {
-            if (error.code === 'PROTOCOL_CONNECTION_LOST') {
-                connection = mysql.createConnection(process.env.CLEARDB_DATABASE_URL);
-            } else {
-                throw error
-            }
+            throw error
         }
         res.render('products/show', { result })
     })
@@ -40,13 +28,9 @@ const getNew = (req, res) => {
 const getProductEdit = (req, res) => {
     const { id } = req.params
     const q = 'SELECT * FROM products WHERE id=?'
-    connection.query(q, id, (error, result) => {
+    pool.query(q, id, (error, result) => {
         if (error) {
-            if (error.code === 'PROTOCOL_CONNECTION_LOST') {
-                connection = mysql.createConnection(process.env.CLEARDB_DATABASE_URL);
-            } else {
-                throw error
-            }
+            throw error
         }
         res.render('products/edit', { result })
     })
@@ -55,13 +39,9 @@ const getProductEdit = (req, res) => {
 const postNew = (req, res) => {
     console.log(req.body)
     const q = 'INSERT INTO products SET ?'
-    connection.query(q, req.body, (error, result) => {
+    pool.query(q, req.body, (error, result) => {
         if (error) {
-            if (error.code === 'PROTOCOL_CONNECTION_LOST') {
-                connection = mysql.createConnection(process.env.CLEARDB_DATABASE_URL);
-            } else {
-                throw error
-            }
+            throw error
         }
         req.flash('success', 'Successfully added a product')
         res.redirect('/products')
@@ -71,13 +51,9 @@ const postNew = (req, res) => {
 const patchProduct = (req, res) => {
     const { id } = req.params
     const q = 'UPDATE products SET ? WHERE id=?'
-    connection.query(q, [req.body, parseInt(id)], (error, result) => {
+    pool.query(q, [req.body, parseInt(id)], (error, result) => {
         if (error) {
-            if (error.code === 'PROTOCOL_CONNECTION_LOST') {
-                connection = mysql.createConnection(process.env.CLEARDB_DATABASE_URL);
-            } else {
-                throw error
-            }
+            throw error
         }
         req.flash('success', 'Successfully edited a product')
         res.redirect(`/products/${id}`)
@@ -87,13 +63,9 @@ const patchProduct = (req, res) => {
 const deleteProduct = (req, res) => {
     const { id } = req.params
     const q = 'DELETE FROM products WHERE id=?'
-    connection.query(q, id, (error, result) => {
+    pool.query(q, id, (error, result) => {
         if (error) {
-            if (error.code === 'PROTOCOL_CONNECTION_LOST') {
-                connection = mysql.createConnection(process.env.CLEARDB_DATABASE_URL);
-            } else {
-                throw error
-            }
+            throw error
         }
         req.flash('success', 'Successfully deleted a product')
         res.redirect(`/products`)
