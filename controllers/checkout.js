@@ -24,8 +24,8 @@ const createCheckoutSession = async (req, res) => {
         payment_method_types: ['card'],
         line_items: lineItems,
         mode: 'payment',
-        success_url: 'http://localhost:3000/checkout/success',
-        cancel_url: 'http://localhost:3000/checkout/cancel',
+        success_url: `${process.env.SITE_URL}/checkout/success`,
+        cancel_url: `${process.env.SITE_URL}/checkout/cancel`,
     });
 
     res.json({ id: session.id });

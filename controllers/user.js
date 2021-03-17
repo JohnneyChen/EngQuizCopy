@@ -8,7 +8,7 @@ const getRegister = (req, res) => {
 
 const postRegister = wrapAsync(async (req, res, next) => {
     try {
-        if (req.body.admin_key === 'admin') {
+        if (req.body.admin_key === process.env.ADMIN_KEY) {
             const { username, password } = req.body
             const newUser = new Account({ username: username, admin: true })
             const registeredUser = await Account.register(newUser, password)
